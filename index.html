@@ -1,32 +1,22 @@
 <!--
   230 RED STREET — Casting / Audition Submission Page
   ==============================================================
-  THE FORM IS ALREADY WIRED UP. You only choose WHERE submissions go.
-  Scroll down to the block marked  <<< FORM SETTINGS >>>  and set ONE line.
+  Live at https://230redstreet.com (GitHub Pages, repo: rcclayton/230-red-street-site).
 
-  ---- OPTION A (default, zero setup): NETLIFY ----
-    If you deploy this file to Netlify (free: drag it onto https://app.netlify.com/drop),
-    the form works immediately with NO account keys and NO code changes.
-    Submissions appear under your site's "Forms" tab, and Netlify can email you
-    each one (Site settings > Forms > Form notifications). Leave PROVIDER = "netlify".
+  Submissions POST to a Google Apps Script web app, which appends a row to the
+  "230 Red Street — Auditions" spreadsheet and emails ryan@ryanclayton.media.
+  The endpoint URL is the ENDPOINT variable in the script block at the bottom.
 
-  ---- OPTION B: FORMSPREE (works on ANY host, incl. GitHub Pages) ----
-    1. Make a free form at https://formspree.io and copy its endpoint
-       (looks like https://formspree.io/f/abcdwxyz).
-    2. In the <<< FORM SETTINGS >>> block below, set:
-         PROVIDER = "formspree"
-         FORMSPREE_ENDPOINT = "https://formspree.io/f/abcdwxyz"
-    Submissions land in your Formspree inbox and forward to your email.
+  If submissions ever stop working:
+    1. Open the ENDPOINT URL in a browser. It should say the endpoint is live.
+       If not, the deployment was deleted or replaced — redeploy from the
+       Apps Script editor and paste the new /exec URL into ENDPOINT.
+    2. Check the browser console on a failed submit. A CORS error means the
+       deployment's access setting is no longer "Anyone".
+    3. Do NOT switch the fetch to JSON. Apps Script does not answer CORS
+       preflight requests, so form-encoded is required.
 
-  Either way, actors see a clean "thank you" message inline after submitting.
-
-  THINGS TO FILL IN (search the file for the word EDIT):
-    - Region + shoot dates, compensation, submission deadline, contact email
-    - The Daughter age decision line
-  (The audition-sides link already points to the PDF in this folder.)
-
-  TO HOST IT: upload this file (and the sides PDF if you want it downloadable)
-  to Netlify, GitHub Pages, or any web host. No build step needed.
+  Before pushing any change: python3 tools/validate_site.py
 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -326,9 +316,8 @@
         <p style="color:var(--muted);max-width:460px;margin:0 auto">Thank you. We review on a rolling basis and will reach out if we'd like to move forward with a callback. Break a leg.</p>
       </div>
 
-      <form id="auditionForm" name="audition" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
-        <!-- Netlify needs these two lines to register the form; harmless on other hosts -->
-        <input type="hidden" name="form-name" value="audition">
+      <form id="auditionForm" name="audition" method="POST">
+        <!-- Honeypot: hidden from people, filled in by bots. The backend drops anything with this set. -->
         <p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
         <div class="field row">
           <div>
@@ -420,22 +409,15 @@
 </footer>
 
 <script>
-/* ================= <<< FORM SETTINGS >>> =================
-   Choose where audition submissions go. See instructions at the top of this file.
-   - "netlify"  : zero setup, works when this page is hosted on Netlify.
-   - "formspree": works on any host. Also paste your endpoint below.
-*/
-var PROVIDER = "netlify";                                   // "netlify" or "formspree"
-var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOURID";   // only used if PROVIDER = "formspree"
-/* ======================================================== */
+/* Submissions go to a Google Apps Script web app, which appends a row to the
+   audition spreadsheet and emails Ryan. This is the /exec URL from
+   Deploy > New deployment in the Apps Script editor. */
+var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iCcW2RnUdx3aMHG2FmLOaR9aYUke9p-vqb4iRWDZaULJS/exec";
 
 (function () {
   var form = document.getElementById("auditionForm");
   var thanks = document.getElementById("thanks");
   if (!form) return;
-
-  // Point the form's action at the right place based on PROVIDER
-  if (PROVIDER === "formspree") { form.setAttribute("action", FORMSPREE_ENDPOINT); }
 
   function showThanks() {
     form.style.display = "none";
@@ -446,25 +428,35 @@ var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOURID";   // only used if PROV
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     var btn = form.querySelector("button[type=submit]");
-    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
-    var data = new FormData(form);
+    if (btn) { btn.disabled = true; btn.textContent = "Sending\u2026"; }
 
-    if (PROVIDER === "formspree") {
-      fetch(FORMSPREE_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
-        .then(function (r) { if (r.ok) { showThanks(); } else { throw new Error("bad response"); } })
-        .catch(fail);
-    } else {
-      // Netlify: post url-encoded data (including form-name) back to the page path
-      var enc = new URLSearchParams(data).toString();
-      fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: enc })
-        .then(function (r) { if (r.ok) { showThanks(); } else { throw new Error("bad response"); } })
-        .catch(fail);
-    }
+    /* Form-encoded on purpose. JSON would make this a preflighted request, and
+       Apps Script web apps do not answer preflight, so submissions would fail
+       with a CORS error that never reaches the backend. */
+    var body = new URLSearchParams(new FormData(form)).toString();
 
-    function fail() {
-      if (btn) { btn.disabled = false; btn.textContent = "Send My Audition"; }
-      alert("Sorry, something went wrong sending your audition. Please email your tape link instead.");
-    }
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body
+    })
+      .then(function (r) {
+        if (!r.ok) { throw new Error("HTTP " + r.status); }
+        return r.text();
+      })
+      .then(function (text) {
+        if (text.indexOf("OK") === -1) { throw new Error("backend said: " + text); }
+        showThanks();
+      })
+      .catch(function (err) {
+        console.error("Audition submission failed:", err);
+        if (btn) { btn.disabled = false; btn.textContent = "Send My Audition"; }
+        alert(
+          "Sorry \u2014 something went wrong sending your audition.\n\n" +
+          "Please email your tape link to ryan@ryanclayton.media instead. " +
+          "Your submission still counts, and we'll confirm we got it."
+        );
+      });
   });
 })();
 </script>
