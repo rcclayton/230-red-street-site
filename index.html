@@ -1,0 +1,471 @@
+<!--
+  230 RED STREET — Casting / Audition Submission Page
+  ==============================================================
+  THE FORM IS ALREADY WIRED UP. You only choose WHERE submissions go.
+  Scroll down to the block marked  <<< FORM SETTINGS >>>  and set ONE line.
+
+  ---- OPTION A (default, zero setup): NETLIFY ----
+    If you deploy this file to Netlify (free: drag it onto https://app.netlify.com/drop),
+    the form works immediately with NO account keys and NO code changes.
+    Submissions appear under your site's "Forms" tab, and Netlify can email you
+    each one (Site settings > Forms > Form notifications). Leave PROVIDER = "netlify".
+
+  ---- OPTION B: FORMSPREE (works on ANY host, incl. GitHub Pages) ----
+    1. Make a free form at https://formspree.io and copy its endpoint
+       (looks like https://formspree.io/f/abcdwxyz).
+    2. In the <<< FORM SETTINGS >>> block below, set:
+         PROVIDER = "formspree"
+         FORMSPREE_ENDPOINT = "https://formspree.io/f/abcdwxyz"
+    Submissions land in your Formspree inbox and forward to your email.
+
+  Either way, actors see a clean "thank you" message inline after submitting.
+
+  THINGS TO FILL IN (search the file for the word EDIT):
+    - Region + shoot dates, compensation, submission deadline, contact email
+    - The Daughter age decision line
+  (The audition-sides link already points to the PDF in this folder.)
+
+  TO HOST IT: upload this file (and the sides PDF if you want it downloadable)
+  to Netlify, GitHub Pages, or any web host. No build step needed.
+-->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>230 Red Street — Casting Call</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --panel:#131318;
+    --panel-2:#17171e;
+    --ink:#ececf0;
+    --muted:#9a9aa6;
+    --line:#26262f;
+    --blood:#c1121f;
+    --blood-dim:#8a0f18;
+    --neon:#3b7dff;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:var(--neon);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+  /* HERO */
+  header.hero{
+    position:relative;
+    text-align:center;
+    padding:110px 24px 70px;
+    background:
+      radial-gradient(1200px 500px at 50% -10%, rgba(193,18,31,.18), transparent 60%),
+      radial-gradient(900px 500px at 50% 120%, rgba(59,125,255,.10), transparent 60%),
+      var(--bg);
+    border-bottom:1px solid var(--line);
+    overflow:hidden;
+  }
+  .hero .kicker{
+    letter-spacing:.42em;
+    text-transform:uppercase;
+    font-size:12px;
+    color:var(--blood);
+    font-weight:600;
+    margin:0 0 18px;
+  }
+  .hero h1{
+    font-family:'Cinzel',serif;
+    font-weight:700;
+    font-size:clamp(40px,8vw,84px);
+    letter-spacing:.02em;
+    margin:0;
+    line-height:1.02;
+    text-shadow:0 0 40px rgba(193,18,31,.25);
+  }
+  .hero .sub{
+    color:var(--muted);
+    text-transform:uppercase;
+    letter-spacing:.28em;
+    font-size:13px;
+    margin-top:20px;
+  }
+  .hero .logline{
+    max-width:620px;
+    margin:34px auto 0;
+    font-size:18px;
+    color:#cfcfd6;
+  }
+  .cta{
+    display:inline-block;
+    margin-top:38px;
+    padding:15px 34px;
+    background:var(--blood);
+    color:#fff;
+    font-weight:600;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-size:13px;
+    border-radius:2px;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .cta:hover{background:#e11626;transform:translateY(-2px);text-decoration:none}
+
+  /* SECTIONS */
+  section{padding:64px 0;border-bottom:1px solid var(--line)}
+  .eyebrow{
+    color:var(--blood);
+    letter-spacing:.28em;
+    text-transform:uppercase;
+    font-size:12px;
+    font-weight:600;
+    margin:0 0 10px;
+  }
+  h2{
+    font-family:'Cinzel',serif;
+    font-size:clamp(26px,4vw,36px);
+    margin:0 0 8px;
+    font-weight:700;
+  }
+  .lead{color:var(--muted);max-width:640px;margin:0 0 34px;font-size:17px}
+
+  /* ROLE CARDS */
+  .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .role{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px 24px 26px;
+    position:relative;
+  }
+  .role.lead-role{grid-column:1 / -1;border-color:var(--blood-dim)}
+  .role h3{
+    font-family:'Cinzel',serif;
+    font-size:21px;
+    margin:0 0 4px;
+    display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  }
+  .tag{
+    font-family:'Inter',sans-serif;
+    font-size:10px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:999px;
+    border:1px solid var(--line);
+    color:var(--muted);
+    font-weight:600;
+  }
+  .tag.lead{background:var(--blood);border-color:var(--blood);color:#fff}
+  .role .meta{color:var(--muted);font-size:13px;margin:2px 0 12px;letter-spacing:.02em}
+  .role p{margin:0 0 12px;color:#d4d4db;font-size:15px}
+  .role .want{font-size:14px;color:var(--muted)}
+  .role .want b{color:var(--ink);font-weight:600}
+  .note{
+    background:rgba(59,125,255,.08);
+    border:1px solid rgba(59,125,255,.28);
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:13px;
+    color:#bcd0ff;
+    margin-top:12px;
+  }
+
+  /* STEPS + GUIDELINES */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
+  ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
+  ol.steps li{counter-increment:s;position:relative;padding:0 0 18px 52px;color:#d4d4db}
+  ol.steps li::before{
+    content:counter(s);
+    position:absolute;left:0;top:-2px;
+    width:34px;height:34px;border-radius:50%;
+    background:var(--panel);border:1px solid var(--blood-dim);
+    color:var(--blood);font-weight:700;
+    display:flex;align-items:center;justify-content:center;font-size:15px;
+  }
+  ul.checks{list-style:none;margin:0;padding:0}
+  ul.checks li{padding:0 0 12px 26px;position:relative;color:#d4d4db;font-size:15px}
+  ul.checks li::before{
+    content:"";position:absolute;left:0;top:9px;
+    width:8px;height:8px;background:var(--blood);border-radius:50%;
+  }
+  ul.checks b{color:var(--ink)}
+
+  /* FORM */
+  .formwrap{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:34px}
+  .field{margin-bottom:20px}
+  .field.row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  label{display:block;font-size:13px;font-weight:600;letter-spacing:.02em;margin-bottom:7px;color:#cfcfd6}
+  label .req{color:var(--blood)}
+  input,select,textarea{
+    width:100%;padding:12px 14px;background:#0d0d11;
+    border:1px solid var(--line);border-radius:7px;color:var(--ink);
+    font-family:inherit;font-size:15px;
+  }
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--blood);box-shadow:0 0 0 3px rgba(193,18,31,.18)}
+  .hint{font-size:12px;color:var(--muted);margin-top:6px}
+  button.submit{
+    width:100%;padding:16px;background:var(--blood);color:#fff;border:none;
+    border-radius:7px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    font-size:14px;cursor:pointer;transition:background .15s ease;
+  }
+  button.submit:hover{background:#e11626}
+
+  footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:13px}
+  footer .title{font-family:'Cinzel',serif;color:var(--ink);letter-spacing:.12em;font-size:15px;margin-bottom:8px}
+
+  @media(max-width:720px){
+    .roles{grid-template-columns:1fr}
+    .role.lead-role{grid-column:auto}
+    .grid2{grid-template-columns:1fr;gap:32px}
+    .field.row{grid-template-columns:1fr}
+    section{padding:48px 0}
+  }
+</style>
+
+<header class="hero">
+  <p class="kicker">Now Casting · Short Horror Film</p>
+  <h1>230 Red Street</h1>
+  <p class="sub">Remote Self-Tape Auditions</p>
+  <p class="logline">A grieving man follows a mysterious envelope to a quiet house, and comes face to face with a masked double of himself. A tense, contained horror short. Written by Ryan Clayton.</p>
+  <a class="cta" href="#submit">Submit Your Audition</a>
+</header>
+
+<section id="roles">
+  <div class="wrap">
+    <p class="eyebrow">The Roles</p>
+    <h2>Who We're Casting</h2>
+    <p class="lead">Five roles, reviewed on a rolling basis. Read the role, record a self-tape, and submit below.</p>
+
+    <div class="roles">
+      <div class="role lead-role">
+        <h3>COREY <span class="tag lead">Lead</span> <span class="tag">also plays "Bad Corey"</span></h3>
+        <div class="meta">Male · plays 30s</div>
+        <p>A hopeless, exhausted middle manager, freshly grieving and in over his head. He carries the film almost entirely alone through the first half, then has to sell a chilling doppelganger reveal by playing his own menacing double. Heavy emotional and physical role, including a staged, rehearsed fight.</p>
+        <p class="want"><b>We're looking for:</b> strong dramatic range, believable vulnerability, and the ability to flip to something dangerous. Comfort with physical / stunt-style choreography (padded, safety first).</p>
+      </div>
+
+      <div class="role">
+        <h3>MASKED MAN <span class="tag">Body Double</span></h3>
+        <div class="meta">Any gender · matches Corey's build</div>
+        <p>Masked throughout, never unmasked on camera. Performs the physical fight so we can stage the doppelganger without camera tricks. Cast to match whoever plays Corey.</p>
+        <p class="want"><b>We're looking for:</b> a physical performer comfortable with staged action. Please tell us your height, build, and hair.</p>
+      </div>
+
+      <div class="role">
+        <h3>BRAD <span class="tag">Supporting</span></h3>
+        <div class="meta">Male · plays 30s–40s</div>
+        <p>Corey's warm, worried brother. Appears in one intercut phone-call sequence. Small role, low time commitment, can be shot separately.</p>
+        <p class="want"><b>We're looking for:</b> warmth and natural, grounded delivery in a phone conversation.</p>
+      </div>
+
+      <div class="role">
+        <h3>WIFE <span class="tag">Supporting</span></h3>
+        <div class="meta">Female · plays 30s</div>
+        <p>Held captive and terrified. Primarily reaction and screams, physically constrained in the scene.</p>
+        <p class="want"><b>We're looking for:</b> committed, believable fear and strong reaction work.</p>
+      </div>
+
+      <div class="role">
+        <h3>DAUGHTER <span class="tag">Supporting</span></h3>
+        <div class="meta">Young captive · reaction &amp; screams</div>
+        <p>A young captive, terrified. Reaction and screams, plus one off-screen line.</p>
+        <p class="want"><b>We're looking for:</b> strong reaction and scream work.</p>
+        <!-- EDIT: Daughter age decision. Keep this note if casting adult; edit if casting a minor. -->
+        <div class="note">Casting an adult performer who reads younger to keep the shoot simple. If you're a minor or a guardian, please note it in your submission (on-set guardian and permit rules apply).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how">
+  <div class="wrap grid2">
+    <div>
+      <p class="eyebrow">The Process</p>
+      <h2>How To Submit</h2>
+      <ol class="steps">
+        <li>Record your audition on any phone or camera using the guidelines beside this.</li>
+        <li>Upload it to <b>YouTube (unlisted)</b>, <b>Google Drive</b>, or <b>Vimeo</b>, set so anyone with the link can view.</li>
+        <li>Fill out the form below and paste your video link. We review on a rolling basis.</li>
+        <li>Selected performers get a short live video callback and an availability check.</li>
+      </ol>
+      <!-- Sides link: upload the PDF next to this page and keep this filename, or repoint it. -->
+      <p style="margin-top:18px"><b>Sides to perform:</b> <a href="Audition%20Sides%20-%20230%20Red%20Street.pdf" target="_blank" rel="noopener">Download the audition sides (PDF)</a></p>
+    </div>
+    <div>
+      <p class="eyebrow">Self-Tape Guidelines</p>
+      <h2 style="font-size:26px">Make It Count</h2>
+      <ul class="checks">
+        <li><b>Slate first.</b> Start by saying your name, height, and the role you're reading for.</li>
+        <li><b>Shoot horizontal</b> (landscape), framed chest-up, plain background.</li>
+        <li><b>Light your face</b> evenly in a quiet, well-lit space.</li>
+        <li><b>Clear audio</b> matters more than a fancy camera. Record somewhere quiet.</li>
+        <li><b>Use a reader</b> off-camera for the other lines if you can.</li>
+        <li><b>Keep it to the sides.</b> A short second take is welcome.</li>
+        <li><b>Test your link</b> before submitting. Make sure it isn't set to private.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="submit">
+  <div class="wrap">
+    <p class="eyebrow">Submit</p>
+    <h2>Your Audition</h2>
+    <p class="lead">Reviewed on a rolling basis. Deadline: <b>[EDIT: submission deadline]</b>. Region &amp; shoot dates: [EDIT]. Compensation: [EDIT].</p>
+
+    <div class="formwrap">
+      <!-- Success message (shown after a submission goes through) -->
+      <div id="thanks" style="display:none;text-align:center;padding:20px 10px">
+        <div style="font-family:'Cinzel',serif;font-size:24px;color:var(--ink);margin-bottom:8px">Audition received</div>
+        <p style="color:var(--muted);max-width:460px;margin:0 auto">Thank you. We review on a rolling basis and will reach out if we'd like to move forward with a callback. Break a leg.</p>
+      </div>
+
+      <form id="auditionForm" name="audition" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/">
+        <!-- Netlify needs these two lines to register the form; harmless on other hosts -->
+        <input type="hidden" name="form-name" value="audition">
+        <p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
+        <div class="field row">
+          <div>
+            <label>Full name <span class="req">*</span></label>
+            <input type="text" name="name" required>
+          </div>
+          <div>
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="email" required>
+          </div>
+        </div>
+
+        <div class="field row">
+          <div>
+            <label>Phone</label>
+            <input type="tel" name="phone">
+          </div>
+          <div>
+            <label>Location (city / region) <span class="req">*</span></label>
+            <input type="text" name="location" required>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Role(s) you're reading for <span class="req">*</span></label>
+          <select name="role" required>
+            <option value="">Select a role…</option>
+            <option>Corey (Lead)</option>
+            <option>Masked Man (Body Double)</option>
+            <option>Brad</option>
+            <option>Wife</option>
+            <option>Daughter</option>
+            <option>Open to any</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Height / build / hair <span class="req">*</span></label>
+          <input type="text" name="physical" placeholder="e.g. 5'11&quot;, medium build, dark short hair" required>
+          <p class="hint">Important for the Corey and body-double match.</p>
+        </div>
+
+        <div class="field">
+          <label>Link to your self-tape <span class="req">*</span></label>
+          <input type="url" name="tape_link" placeholder="https://youtube.com/... or Google Drive / Vimeo link" required>
+          <p class="hint">Make sure it's viewable by anyone with the link.</p>
+        </div>
+
+        <div class="field row">
+          <div>
+            <label>Headshot / photo link</label>
+            <input type="url" name="headshot" placeholder="Optional">
+          </div>
+          <div>
+            <label>Resume / reel link</label>
+            <input type="url" name="reel" placeholder="Optional">
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Available for the early-August shoot nights? <span class="req">*</span></label>
+          <select name="availability" required>
+            <option value="">Select…</option>
+            <option>Yes, available</option>
+            <option>Mostly, with some conflicts</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Anything else we should know?</label>
+          <textarea name="notes" rows="3" placeholder="Minor / guardian status, special skills, questions…"></textarea>
+        </div>
+
+        <button class="submit" type="submit">Send My Audition</button>
+        <p class="hint" style="text-align:center;margin-top:14px">
+          Prefer email? Send your tape link to <a href="mailto:EDIT_YOUR_EMAIL@example.com?subject=230%20Red%20Street%20Audition">EDIT_YOUR_EMAIL@example.com</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="title">230 RED STREET</div>
+  Casting on a rolling basis. Due to volume we may not respond to every applicant individually.<br>
+  An appearance release is required from every performer (and a guardian for any minor) before or on the shoot day.<br>
+  Questions? <a href="mailto:EDIT_YOUR_EMAIL@example.com">EDIT_YOUR_EMAIL@example.com</a>
+</footer>
+
+<script>
+/* ================= <<< FORM SETTINGS >>> =================
+   Choose where audition submissions go. See instructions at the top of this file.
+   - "netlify"  : zero setup, works when this page is hosted on Netlify.
+   - "formspree": works on any host. Also paste your endpoint below.
+*/
+var PROVIDER = "netlify";                                   // "netlify" or "formspree"
+var FORMSPREE_ENDPOINT = "https://formspree.io/f/YOURID";   // only used if PROVIDER = "formspree"
+/* ======================================================== */
+
+(function () {
+  var form = document.getElementById("auditionForm");
+  var thanks = document.getElementById("thanks");
+  if (!form) return;
+
+  // Point the form's action at the right place based on PROVIDER
+  if (PROVIDER === "formspree") { form.setAttribute("action", FORMSPREE_ENDPOINT); }
+
+  function showThanks() {
+    form.style.display = "none";
+    thanks.style.display = "block";
+    thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var btn = form.querySelector("button[type=submit]");
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+    var data = new FormData(form);
+
+    if (PROVIDER === "formspree") {
+      fetch(FORMSPREE_ENDPOINT, { method: "POST", body: data, headers: { Accept: "application/json" } })
+        .then(function (r) { if (r.ok) { showThanks(); } else { throw new Error("bad response"); } })
+        .catch(fail);
+    } else {
+      // Netlify: post url-encoded data (including form-name) back to the page path
+      var enc = new URLSearchParams(data).toString();
+      fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: enc })
+        .then(function (r) { if (r.ok) { showThanks(); } else { throw new Error("bad response"); } })
+        .catch(fail);
+    }
+
+    function fail() {
+      if (btn) { btn.disabled = false; btn.textContent = "Send My Audition"; }
+      alert("Sorry, something went wrong sending your audition. Please email your tape link instead.");
+    }
+  });
+})();
+</script>
