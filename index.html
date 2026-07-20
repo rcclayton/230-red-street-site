@@ -362,18 +362,18 @@
 
         <div class="field">
           <label>Link to your self-tape <span class="req">*</span></label>
-          <input type="url" name="tape_link" placeholder="https://youtube.com/... or Google Drive / Vimeo link" required>
-          <p class="hint">Make sure it's viewable by anyone with the link.</p>
+          <input type="text" inputmode="url" name="tape_link" placeholder="youtube.com/... or a Google Drive / Vimeo link" required>
+          <p class="hint">Make sure it's viewable by anyone with the link. No need to type "https://" — we'll add it.</p>
         </div>
 
         <div class="field row">
           <div>
             <label>Headshot / photo link</label>
-            <input type="url" name="headshot" placeholder="Optional">
+            <input type="text" inputmode="url" name="headshot" placeholder="Optional">
           </div>
           <div>
             <label>Resume / reel link</label>
-            <input type="url" name="reel" placeholder="Optional">
+            <input type="text" inputmode="url" name="reel" placeholder="Optional">
           </div>
         </div>
 
@@ -419,6 +419,55 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iC
   var thanks = document.getElementById("thanks");
   if (!form) return;
 
+  /* Actors paste links without a scheme constantly ("youtube.com/watch?v=..."),
+     which is why these are text inputs rather than type="url" — the native
+     validator rejects those with a message that doesn't say what's wrong.
+     We add https:// ourselves and validate with a readable message instead. */
+  var SCHEME = /^[a-z][a-z0-9+.-]*:\/\//i;
+
+  function normalizeUrl(value) {
+    var v = (value || "").trim();
+    if (!v) return "";
+    // Someone typing "https:/x" or "http//x" gets repaired rather than rejected.
+    v = v.replace(/^(https?):\/(?!\/)/i, "$1://").replace(/^(https?)\/\//i, "$1://");
+    if (!SCHEME.test(v)) { v = "https://" + v; }
+    return v;
+  }
+
+  function looksLikeUrl(value) {
+    // Requires a dot in the host, so "asdf" fails but "youtu.be/x" passes.
+    return /^https?:\/\/[^\s/.]+\.[^\s/]+/i.test(value);
+  }
+
+  var urlFields = form.querySelectorAll('input[inputmode="url"]');
+  for (var i = 0; i < urlFields.length; i++) {
+    urlFields[i].addEventListener("blur", function () {
+      this.value = normalizeUrl(this.value);
+      this.setCustomValidity("");
+    });
+    urlFields[i].addEventListener("input", function () {
+      this.setCustomValidity("");
+    });
+  }
+
+  function validateUrls() {
+    for (var j = 0; j < urlFields.length; j++) {
+      var el = urlFields[j];
+      el.value = normalizeUrl(el.value);
+      el.setCustomValidity("");
+      if (!el.value) continue; // empty optional fields are fine
+      if (!looksLikeUrl(el.value)) {
+        el.setCustomValidity(
+          "That doesn't look like a link. Paste the full address, like youtube.com/watch?v=abc123"
+        );
+        el.reportValidity();
+        el.focus();
+        return false;
+      }
+    }
+    return true;
+  }
+
   function showThanks() {
     form.style.display = "none";
     thanks.style.display = "block";
@@ -427,6 +476,7 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iC
 
   form.addEventListener("submit", function (e) {
     e.preventDefault();
+    if (!validateUrls()) return;
     var btn = form.querySelector("button[type=submit]");
     if (btn) { btn.disabled = true; btn.textContent = "Sending\u2026"; }
 

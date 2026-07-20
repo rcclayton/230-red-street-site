@@ -60,6 +60,15 @@ check(
     "the Apps Script endpoint URL is not set in index.html",
 )
 check('name="bot-field"' in html, "the honeypot field was removed from index.html")
+
+# type="url" rejects links pasted without a scheme, which actors do constantly.
+# The page uses text inputs plus its own normalizer instead.
+check(re.search(r'<input[^>]*type="url"', html) is None,
+      'type="url" rejects links without https://; use inputmode="url" + normalizeUrl')
+check("function normalizeUrl" in html, "the URL normalizer was removed from index.html")
+url_fields = re.findall(r'<input[^>]*inputmode="url"[^>]*\bname="([^"]+)"', html)
+check(sorted(url_fields) == ["headshot", "reel", "tape_link"],
+      f"expected 3 link fields with inputmode=url, found: {sorted(url_fields)}")
 check("application/x-www-form-urlencoded" in html,
       "the form must post form-encoded; JSON breaks on Apps Script CORS preflight")
 
