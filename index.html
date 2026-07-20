@@ -54,7 +54,7 @@
   header.hero{
     position:relative;
     text-align:center;
-    padding:110px 24px 70px;
+    padding:74px 24px 70px;
     background:
       radial-gradient(1200px 500px at 50% -10%, rgba(193,18,31,.18), transparent 60%),
       radial-gradient(900px 500px at 50% 120%, rgba(59,125,255,.10), transparent 60%),
@@ -62,13 +62,28 @@
     border-bottom:1px solid var(--line);
     overflow:hidden;
   }
-  .hero .kicker{
-    letter-spacing:.42em;
+  /* "CASTING CALL" mark — states the page's actual purpose above the film title */
+  .hero .castingmark{
+    display:flex;align-items:center;justify-content:center;gap:16px;
+    margin:0 0 20px;
+    font-family:'Cinzel',serif;
+    font-weight:700;
+    font-size:clamp(20px,3.2vw,30px);
+    letter-spacing:.3em;
+    text-indent:.3em;              /* offsets the trailing letter-space so it reads centered */
     text-transform:uppercase;
-    font-size:12px;
     color:var(--blood);
-    font-weight:600;
-    margin:0 0 18px;
+  }
+  .hero .castingmark::before,
+  .hero .castingmark::after{
+    content:"";
+    height:1px;
+    width:clamp(24px,7vw,90px);
+    flex:none;
+    background:linear-gradient(90deg,transparent,var(--blood-dim));
+  }
+  .hero .castingmark::after{
+    background:linear-gradient(90deg,var(--blood-dim),transparent);
   }
   .hero h1{
     font-family:'Cinzel',serif;
@@ -106,6 +121,64 @@
     transition:transform .15s ease, background .15s ease;
   }
   .cta:hover{background:#e11626;transform:translateY(-2px);text-decoration:none}
+  .cta-row{
+    display:flex;justify-content:center;align-items:center;
+    gap:14px;flex-wrap:wrap;margin-top:38px;
+  }
+  .cta-row .cta{margin-top:0}
+  .cta.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+  .cta.ghost:hover{background:rgba(255,255,255,.06);border-color:var(--blood-dim)}
+
+  /* FACT CHIPS — answers "what is this / when / what do I get" at a glance */
+  .facts{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:10px;
+    list-style:none;margin:26px auto 0;padding:0;max-width:720px;
+  }
+  .facts li{
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.03);
+    border-radius:999px;
+    padding:7px 15px;
+    font-size:12.5px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    font-weight:600;
+    color:#cfcfd6;
+  }
+  .facts li b{color:var(--ink);font-weight:700}
+
+  /* CALL BAR — states the page's purpose before anything else loads into view */
+  .callbar{
+    display:flex;align-items:center;justify-content:center;
+    gap:14px;flex-wrap:wrap;
+    padding:11px 20px;
+    background:var(--blood);
+    color:#fff;
+    font-size:12.5px;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    border-bottom:1px solid rgba(0,0,0,.35);
+  }
+  .callbar .rec{
+    width:8px;height:8px;border-radius:50%;
+    background:#fff;flex:none;
+    animation:rec 2.4s ease-out infinite;
+  }
+  @keyframes rec{
+    0%{box-shadow:0 0 0 0 rgba(255,255,255,.65)}
+    70%{box-shadow:0 0 0 9px rgba(255,255,255,0)}
+    100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
+  }
+  .callbar .sep{opacity:.5}
+  .callbar .deadline{text-transform:none;letter-spacing:.06em;font-weight:500;font-size:13px}
+
+  a:focus-visible,button:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    .callbar .rec{animation:none}
+    .cta:hover{transform:none}
+  }
 
   /* SECTIONS */
   section{padding:64px 0;border-bottom:1px solid var(--line)}
@@ -211,6 +284,13 @@
   footer .title{font-family:'Cinzel',serif;color:var(--ink);letter-spacing:.12em;font-size:15px;margin-bottom:8px}
 
   @media(max-width:720px){
+    /* Keep the call bar to a single line so it doesn't eat the phone screen */
+    .callbar{gap:9px;padding:9px 14px;font-size:11px;letter-spacing:.1em}
+    .callbar .sep{display:none}
+    .callbar .deadline{font-size:11.5px}
+    .hero{padding-top:52px}
+    .facts li{font-size:11.5px;padding:6px 12px}
+    .cta-row .cta{width:100%;max-width:320px}
     .roles{grid-template-columns:1fr}
     .role.lead-role{grid-column:auto}
     .grid2{grid-template-columns:1fr;gap:32px}
@@ -219,12 +299,28 @@
   }
 </style>
 
+<div class="callbar">
+  <span class="rec" aria-hidden="true"></span>
+  <span>Open Casting Call</span>
+  <span class="sep" aria-hidden="true">&middot;</span>
+  <span class="deadline">All roles close Fri, Jul 31</span>
+</div>
+
 <header class="hero">
-  <p class="kicker">Now Casting · Short Horror Film</p>
+  <p class="castingmark">Casting Call</p>
   <h1>230 Red Street</h1>
-  <p class="sub">Remote Self-Tape Auditions</p>
+  <p class="sub">Short Horror Film · Lafayette, Indiana</p>
+  <ul class="facts">
+    <li>5 roles open</li>
+    <li>Remote self-tape</li>
+    <li>Shoots <b>Aug 7&ndash;9, 2026</b></li>
+    <li>Credit &middot; meals &middot; footage for your reel</li>
+  </ul>
   <p class="logline">A grieving man follows a mysterious envelope to a quiet house, and comes face to face with a masked double of himself. A tense, contained horror short. Written by Ryan Clayton.</p>
-  <a class="cta" href="#submit">Submit Your Audition</a>
+  <div class="cta-row">
+    <a class="cta" href="#submit">Submit Your Audition</a>
+    <a class="cta ghost" href="Audition%20Sides%20-%20230%20Red%20Street.pdf" target="_blank" rel="noopener">Read the Sides</a>
+  </div>
 </header>
 
 <section id="roles">
@@ -307,7 +403,7 @@
   <div class="wrap">
     <p class="eyebrow">Submit</p>
     <h2>Your Audition</h2>
-    <p class="lead">Reviewed on a rolling basis. <b>Corey and Masked Man close Monday, July 27.</b> Brad, Wife, and Daughter close Friday, July 31. Shooting three consecutive nights in the Lafayette, Indiana area: Fri Aug 7, Sat Aug 8, and Sun Aug 9, 2026. Compensation: credit, meals on every shoot night, and a copy of the film for your reel.</p>
+    <p class="lead">Reviewed on a rolling basis. <b>All roles close Friday, July 31.</b> Shooting three consecutive nights in the Lafayette, Indiana area: Fri Aug 7, Sat Aug 8, and Sun Aug 9, 2026. Compensation: credit, meals on every shoot night, and a copy of the film for your reel.</p>
 
     <div class="formwrap">
       <!-- Success message (shown after a submission goes through) -->
