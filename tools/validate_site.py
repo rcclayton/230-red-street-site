@@ -40,35 +40,70 @@ for bad in ["EDIT_YOUR_EMAIL", "[EDIT", "YOURID", "PASTE_DEPLOYMENT_URL_HERE",
     check(bad not in html, f"placeholder or dead backend reference in index.html: {bad}")
 
 # The form and the backend must agree on field names, or submissions land in
-# the wrong columns with no error anywhere.
-form_fields = set(re.findall(r'<(?:input|select|textarea)[^>]*\bname="([^"]+)"', html))
-form_fields.discard("bot-field")
-m = re.search(r"var FIELDS = \[(.*?)\];", gs, re.S)
-check(m is not None, "could not find the FIELDS array in apps-script/Code.gs")
-if m:
-    gs_fields = set(re.findall(r"'([^']+)'", m.group(1)))
+# the wrong columns with no error anywhere. Scoped per-form: the page now has
+# two independent forms writing to two different sheet tabs.
+FORM_BODIES = dict(re.findall(r'<form[^>]*\bid="([^"]+)"[^>]*>(.*?)</form>', html, re.S))
+
+# Not data columns: the honeypot is anti-spam, form_type is backend routing.
+NON_FIELD_INPUTS = {"bot-field", "form_type"}
+
+
+def form_fields_of(form_id):
+    body = FORM_BODIES.get(form_id, "")
+    names = set(re.findall(r'<(?:input|select|textarea)[^>]*\bname="([^"]+)"', body))
+    return names - NON_FIELD_INPUTS
+
+
+def gs_array(var_name):
+    m = re.search(r"var %s = \[(.*?)\];" % var_name, gs, re.S)
+    if m is None:
+        errors.append(f"could not find the {var_name} array in apps-script/Code.gs")
+        return None
+    return set(re.findall(r"'([^']+)'", m.group(1)))
+
+
+def check_form_matches(form_id, var_name):
+    check(form_id in FORM_BODIES, f"<form id={form_id}> is missing from index.html")
+    fields = form_fields_of(form_id)
+    expected = gs_array(var_name)
+    if expected is None:
+        return fields
     check(
-        form_fields == gs_fields,
-        "form fields and Code.gs FIELDS disagree.\n"
-        f"    only in the form:  {sorted(form_fields - gs_fields)}\n"
-        f"    only in Code.gs:   {sorted(gs_fields - form_fields)}",
+        fields == expected,
+        f"{form_id} fields and Code.gs {var_name} disagree.\n"
+        f"    only in the form:  {sorted(fields - expected)}\n"
+        f"    only in Code.gs:   {sorted(expected - fields)}",
     )
+    return fields
+
+
+audition_fields = check_form_matches("auditionForm", "FIELDS")
+crew_fields = check_form_matches("crewForm", "CREW_FIELDS")
+form_fields = audition_fields | crew_fields
+
+# Both forms must carry the honeypot, and only the crew form routes on form_type.
+for form_id in ("auditionForm", "crewForm"):
+    check('name="bot-field"' in FORM_BODIES.get(form_id, ""),
+          f"the honeypot field is missing from {form_id}")
+check('name="form_type"' in FORM_BODIES.get("crewForm", "") and
+      'value="crew"' in FORM_BODIES.get("crewForm", ""),
+      'the crew form must carry <input type="hidden" name="form_type" value="crew">')
+check('name="form_type"' not in FORM_BODIES.get("auditionForm", ""),
+      "the audition form must NOT carry form_type; it would reroute auditions")
 
 check(
     re.search(r'ENDPOINT\s*=\s*"https://script\.google\.com/macros/s/[^"]+/exec"', html)
     is not None,
     "the Apps Script endpoint URL is not set in index.html",
 )
-check('name="bot-field"' in html, "the honeypot field was removed from index.html")
-
 # type="url" rejects links pasted without a scheme, which actors do constantly.
 # The page uses text inputs plus its own normalizer instead.
 check(re.search(r'<input[^>]*type="url"', html) is None,
       'type="url" rejects links without https://; use inputmode="url" + normalizeUrl')
 check("function normalizeUrl" in html, "the URL normalizer was removed from index.html")
 url_fields = re.findall(r'<input[^>]*inputmode="url"[^>]*\bname="([^"]+)"', html)
-check(sorted(url_fields) == ["headshot", "reel", "tape_link"],
-      f"expected 3 link fields with inputmode=url, found: {sorted(url_fields)}")
+check(sorted(url_fields) == ["headshot", "links", "reel", "tape_link"],
+      f"expected 4 link fields with inputmode=url, found: {sorted(url_fields)}")
 check("application/x-www-form-urlencoded" in html,
       "the form must post form-encoded; JSON breaks on Apps Script CORS preflight")
 
@@ -83,6 +118,11 @@ check("ryan@ryanclayton.media" in html, "contact email is missing from index.htm
 html_lower = html.lower()
 for stale in ["early-august", "early august", "guardian", "minor"]:
     check(stale not in html_lower, f"stale copy in index.html: {stale}")
+
+# Twist guardrail. The doppelganger reveal must never appear in public copy.
+# See HANDOFF.md item 9 — this has been violated once already.
+for spoiler in ["doppelganger", "bad corey", "unmask"]:
+    check(spoiler not in html_lower, f"TWIST SPOILER in index.html: {spoiler}")
 
 report()
 print(f"PASS: {len(form_fields)} form fields, all checks green")
