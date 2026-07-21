@@ -19,6 +19,29 @@ var FIELDS = ['name', 'email', 'phone', 'location', 'role', 'physical',
 var CREW_FIELDS = ['name', 'email', 'phone', 'location', 'position',
                    'experience', 'nights', 'own_gear', 'links', 'notes'];
 
+/* Run this ONCE from the Apps Script editor (select setupCrewTab in the function
+   dropdown, then press Run) to create the Crew tab with the right headers in the
+   right order. Safe to run again — it will not touch an existing Crew tab.
+   Doing this by hand risks a column-order mismatch with CREW_FIELDS. */
+function setupCrewTab() {
+  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var existing = ss.getSheetByName(CREW_SHEET_NAME);
+  if (existing) {
+    SpreadsheetApp.getUi().alert('The "' + CREW_SHEET_NAME + '" tab already exists. Nothing changed.');
+    return;
+  }
+
+  var sheet = ss.insertSheet(CREW_SHEET_NAME);
+  var headers = ['Timestamp', 'Name', 'Email', 'Phone', 'Location', 'Position',
+                 'Experience', 'Nights', 'Own gear', 'Links', 'Notes',
+                 'Status', 'Review notes'];
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]).setFontWeight('bold');
+  sheet.setFrozenRows(1);
+
+  SpreadsheetApp.getUi().alert('Created the "' + CREW_SHEET_NAME + '" tab with ' +
+                               headers.length + ' columns. You can close this and deploy.');
+}
+
 function doGet() {
   // Lets you confirm the deployment is live by opening the /exec URL in a browser.
   return ContentService.createTextOutput('230 Red Street endpoint is live (auditions + crew).');
