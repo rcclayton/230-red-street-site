@@ -321,6 +321,7 @@
     <a class="cta" href="#submit">Submit Your Audition</a>
     <a class="cta ghost" href="Audition%20Sides%20-%20230%20Red%20Street.pdf" target="_blank" rel="noopener">Read the Sides</a>
   </div>
+  <p style="margin:16px 0 0;font-size:14px"><a href="#crew" style="color:var(--muted)">Not an actor? We're looking for crew too &rarr;</a></p>
 </header>
 
 <section id="roles">
@@ -404,6 +405,7 @@
     <p class="eyebrow">Submit</p>
     <h2>Your Audition</h2>
     <p class="lead">Reviewed on a rolling basis. <b>All roles close Friday, July 31.</b> Shooting three consecutive nights in the Lafayette, Indiana area: Fri Aug 7, Sat Aug 8, and Sun Aug 9, 2026. Compensation: credit, meals on every shoot night, and a copy of the film for your reel.</p>
+    <p class="lead" style="margin-top:-8px"><b>Looking to crew instead?</b> <a href="#crew">Scroll down to Join the Crew</a>.</p>
 
     <div class="formwrap">
       <!-- Success message (shown after a submission goes through) -->
@@ -491,6 +493,113 @@
         <button class="submit" type="submit">Send My Audition</button>
         <p class="hint" style="text-align:center;margin-top:14px">
           Prefer email? Send your tape link to <a href="mailto:ryan@ryanclayton.media?subject=230%20Red%20Street%20Audition">ryan@ryanclayton.media</a>.
+        </p>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section id="crew">
+  <div class="wrap">
+    <p class="eyebrow">The Crew</p>
+    <h2>Who We Need Behind the Camera</h2>
+    <p class="lead">Four positions across three nights. Volunteer crew &mdash; credit, meals, and footage for your reel. <b>All equipment is provided</b> &mdash; you're welcome to work with your own kit if you'd rather, but nothing is required. Tell us what you've worked on.</p>
+
+    <div class="roles">
+      <div class="role">
+        <h3>SOUND MIXER / BOOM OP <span class="tag">1 opening</span> <span class="tag">Gear provided</span></h3>
+        <div class="meta">All three nights &middot; Aug 7&ndash;9</div>
+        <p>One person running production sound end to end &mdash; booming and recording. Two of the three nights are exterior and after dark, so wind and road noise are the real challenge. The third is an interior night with a physically demanding scene and multiple actors.</p>
+        <p class="want"><b>We're looking for:</b> someone comfortable working solo and monitoring their own levels. <b>We supply everything &mdash; recorder, boom, mics, and wireless lavs</b> &mdash; so you can plant mics for the physical scenes instead of chasing them on a boom. Bring your own kit if you prefer, but you don't need to own anything.</p>
+      </div>
+
+      <div class="role">
+        <h3>GAFFER / KEY GRIP <span class="tag">1 opening</span> <span class="tag">Gear provided</span></h3>
+        <div class="meta">All three nights &middot; Aug 7&ndash;9</div>
+        <p>The entire film shoots after dark, so lighting is doing most of the work. You'd design and run lighting across three setups &mdash; a hilltop exterior, an unfinished basement, and a house exterior &mdash; plus stands, flags, negative fill, and one slider move. You'd also own power: we're running off a generator at the exterior location.</p>
+        <p class="want"><b>We're looking for:</b> someone who can light a night exterior with limited units and knows their way around a generator, distro, and safe cable runs. <b>Lights, stands, grip, and power are all supplied</b> &mdash; bring your own if you like, but it isn't required.</p>
+      </div>
+
+      <div class="role">
+        <h3>PRODUCTION ASSISTANT <span class="tag">2 openings</span> <span class="tag">No experience required</span></h3>
+        <div class="meta">All three nights preferred &middot; Aug 7&ndash;9</div>
+        <p>The most useful people on a small night shoot. Lockups and keeping the set quiet, hauling gear up and down basement stairs, watching for traffic and neighbors at the exterior locations, food runs, and resets between takes.</p>
+        <p class="want"><b>We're looking for:</b> reliable, awake, and happy to be outside overnight in August. No experience needed &mdash; this is a good first film credit.</p>
+      </div>
+    </div>
+
+    <div class="note" style="margin-top:22px">
+      <p style="margin:0 0 10px"><b>What we're offering:</b> credit &middot; meals every shoot night &middot; a copy of the film and your footage for your reel. <b>All equipment provided.</b> These are <b>unpaid volunteer positions.</b></p>
+      <p style="margin:0"><b>What to expect:</b> three consecutive nights, Fri Aug 7 &ndash; Sun Aug 9, in the Lafayette, Indiana area. These are <b>overnight calls &mdash; roughly 7 to 11 hours each, starting in the evening and wrapping before dawn.</b> Horror content includes a staged fight and practical stage blood.</p>
+    </div>
+
+    <div class="formwrap" style="margin-top:28px">
+      <!-- Success message (shown after a crew submission goes through) -->
+      <div id="crewThanks" style="display:none;text-align:center;padding:20px 10px">
+        <div style="font-family:'Cinzel',serif;font-size:24px;color:var(--ink);margin-bottom:8px">Thanks &mdash; we got it</div>
+        <p style="color:var(--muted);max-width:460px;margin:0 auto">We'll be in touch about crewing on 230 Red Street. Questions in the meantime: <a href="mailto:ryan@ryanclayton.media">ryan@ryanclayton.media</a></p>
+      </div>
+
+      <form id="crewForm" name="crew" method="POST">
+        <p style="display:none"><label>Leave blank: <input name="bot-field"></label></p>
+        <input type="hidden" name="form_type" value="crew">
+
+        <div class="row">
+          <div>
+            <label>Your name <span class="req">*</span></label>
+            <input type="text" name="name" required>
+          </div>
+          <div>
+            <label>Email <span class="req">*</span></label>
+            <input type="email" name="email" required>
+          </div>
+        </div>
+
+        <div class="row">
+          <div>
+            <label>Phone</label>
+            <input type="tel" name="phone">
+          </div>
+          <div>
+            <label>Where are you based? <span class="req">*</span></label>
+            <input type="text" name="location" required>
+          </div>
+        </div>
+
+        <label>Position you're interested in <span class="req">*</span></label>
+        <select name="position" required>
+          <option value="">Select a position&hellip;</option>
+          <option>Sound Mixer / Boom Op</option>
+          <option>Gaffer / Key Grip</option>
+          <option>Production Assistant</option>
+          <option>Wherever you're needed</option>
+        </select>
+
+        <label>Nights you're available <span class="req">*</span></label>
+        <select name="nights" required>
+          <option value="">Select&hellip;</option>
+          <option>All three nights (Aug 7, 8, 9)</option>
+          <option>Fri Aug 7 only</option>
+          <option>Sat Aug 8 only</option>
+          <option>Sun Aug 9 only</option>
+          <option>Some of them &mdash; see my notes</option>
+        </select>
+
+        <label>What have you worked on?</label>
+        <textarea name="experience" rows="3" placeholder="Student films, shorts, live events, anything. Leave blank if this would be your first &mdash; that's fine for PA roles."></textarea>
+
+        <label>Bringing your own kit?</label>
+        <input type="text" name="own_gear" placeholder="Optional &mdash; tell us what. All gear is provided, so this is never required.">
+
+        <label>Reel, IMDb, or portfolio link</label>
+        <input type="text" inputmode="url" name="links" placeholder="Optional">
+
+        <label>Anything else?</label>
+        <textarea name="notes" rows="3" placeholder="Scheduling conflicts, questions, special skills&hellip;"></textarea>
+
+        <button class="submit" type="submit">Join the Crew</button>
+        <p class="hint" style="text-align:center;margin-top:14px">
+          Prefer email? Tell us which position you're interested in at <a href="mailto:ryan@ryanclayton.media?subject=230%20Red%20Street%20Crew">ryan@ryanclayton.media</a>.
         </p>
       </form>
     </div>
@@ -601,6 +710,81 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iC
           "Sorry \u2014 something went wrong sending your audition.\n\n" +
           "Please email your tape link to ryan@ryanclayton.media instead. " +
           "Your submission still counts, and we'll confirm we got it."
+        );
+      });
+  });
+})();
+
+/* Crew form. Deliberately a separate IIFE from the audition handler above:
+   the audition path is live and collecting submissions, and a shared-function
+   refactor would put it at risk to save a few lines. */
+(function () {
+  var form = document.getElementById("crewForm");
+  var thanks = document.getElementById("crewThanks");
+  if (!form) return;
+
+  var SCHEME = /^[a-z][a-z0-9+.-]*:\/\//i;
+  var link = form.querySelector('input[inputmode="url"]');
+
+  function tidyLink() {
+    var v = (link.value || "").trim();
+    if (!v) { link.value = ""; return; }
+    v = v.replace(/^(https?):\/(?!\/)/i, "$1://").replace(/^(https?)\/\//i, "$1://");
+    if (!SCHEME.test(v)) { v = "https://" + v; }
+    link.value = v;
+  }
+
+  if (link) {
+    link.addEventListener("blur", function () {
+      tidyLink();
+      link.setCustomValidity("");
+    });
+    link.addEventListener("input", function () { link.setCustomValidity(""); });
+  }
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    if (link && link.value) {
+      tidyLink();
+      if (!/^https?:\/\/[^\s/.]+\.[^\s/]+/i.test(link.value)) {
+        link.setCustomValidity(
+          "That doesn't look like a link. Paste the full address, like imdb.com/name/nm123"
+        );
+        link.reportValidity();
+        link.focus();
+        return;
+      }
+    }
+
+    var btn = form.querySelector("button[type=submit]");
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+
+    /* Form-encoded on purpose — see the audition handler above. */
+    var body = new URLSearchParams(new FormData(form)).toString();
+
+    fetch(ENDPOINT, {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: body
+    })
+      .then(function (r) {
+        if (!r.ok) { throw new Error("HTTP " + r.status); }
+        return r.text();
+      })
+      .then(function (text) {
+        if (text.indexOf("OK") === -1) { throw new Error("backend said: " + text); }
+        form.style.display = "none";
+        thanks.style.display = "block";
+        thanks.scrollIntoView({ behavior: "smooth", block: "center" });
+      })
+      .catch(function (err) {
+        console.error("Crew submission failed:", err);
+        if (btn) { btn.disabled = false; btn.textContent = "Join the Crew"; }
+        alert(
+          "Sorry — something went wrong sending your info.\n\n" +
+          "Please email ryan@ryanclayton.media instead and tell us which " +
+          "position you're interested in. Your submission still counts."
         );
       });
   });
