@@ -107,6 +107,35 @@
     font-size:18px;
     color:#cfcfd6;
   }
+  .hero .byline{
+    margin-top:14px;
+    font-size:15px;
+    color:var(--muted);
+  }
+
+  /* CREW NUDGE — secondary path out of the hero, for people who aren't auditioning */
+  .crew-nudge{margin:22px 0 0}
+  .crew-nudge a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 18px;
+    border:1px solid rgba(59,125,255,.45);
+    background:rgba(59,125,255,.10);
+    border-radius:999px;
+    color:var(--ink);
+    font-size:13.5px;
+    font-weight:600;
+    letter-spacing:.04em;
+    transition:background .15s ease, border-color .15s ease;
+  }
+  .crew-nudge a:hover{
+    background:rgba(59,125,255,.18);
+    border-color:var(--neon);
+    text-decoration:none;
+  }
+  .crew-nudge .arrow{color:var(--neon);font-size:15px}
+
   .cta{
     display:inline-block;
     margin-top:38px;
@@ -170,8 +199,6 @@
     70%{box-shadow:0 0 0 9px rgba(255,255,255,0)}
     100%{box-shadow:0 0 0 0 rgba(255,255,255,0)}
   }
-  .callbar .sep{opacity:.5}
-  .callbar .deadline{text-transform:none;letter-spacing:.06em;font-weight:500;font-size:13px}
 
   a:focus-visible,button:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
   @media(prefers-reduced-motion:reduce){
@@ -286,8 +313,6 @@
   @media(max-width:720px){
     /* Keep the call bar to a single line so it doesn't eat the phone screen */
     .callbar{gap:9px;padding:9px 14px;font-size:11px;letter-spacing:.1em}
-    .callbar .sep{display:none}
-    .callbar .deadline{font-size:11.5px}
     .hero{padding-top:52px}
     .facts li{font-size:11.5px;padding:6px 12px}
     .cta-row .cta{width:100%;max-width:320px}
@@ -302,8 +327,6 @@
 <div class="callbar">
   <span class="rec" aria-hidden="true"></span>
   <span>Open Casting Call</span>
-  <span class="sep" aria-hidden="true">&middot;</span>
-  <span class="deadline">All roles close Fri, Jul 31</span>
 </div>
 
 <header class="hero">
@@ -316,12 +339,13 @@
     <li>Shoots one <b>Fri&ndash;Sun weekend, Aug or Sept 2026</b></li>
     <li>Credit &middot; meals &middot; footage for your reel</li>
   </ul>
-  <p class="logline">A grieving man follows a mysterious envelope to a quiet house &mdash; and finds he's not alone. A tense, contained horror short. Written by Ryan Clayton.</p>
+  <p class="logline">A grieving man follows a mysterious envelope to a quiet house &mdash; and finds he's not alone. A tense, contained horror short.</p>
+  <p class="byline">Written by Ryan Clayton.</p>
   <div class="cta-row">
     <a class="cta" href="#submit">Submit Your Audition</a>
     <a class="cta ghost" href="Audition%20Sides%20-%20230%20Red%20Street.pdf" target="_blank" rel="noopener">Read the Sides</a>
   </div>
-  <p style="margin:16px 0 0;font-size:14px"><a href="#crew" style="color:var(--muted)">Not an actor? We're looking for crew too &rarr;</a></p>
+  <p class="crew-nudge"><a href="#crew">Not an actor? We're looking for crew too <span class="arrow" aria-hidden="true">&rarr;</span></a></p>
 </header>
 
 <section id="roles">
@@ -406,7 +430,7 @@
   <div class="wrap">
     <p class="eyebrow">Submit</p>
     <h2>Your Audition</h2>
-    <p class="lead">Reviewed on a rolling basis. <b>All roles close Friday, July 31.</b> Shooting three consecutive days over <b>one Friday&ndash;Sunday weekend in August or September 2026</b> in the Lafayette, Indiana area &mdash; <b>exact dates confirmed when you're cast.</b> <b>Friday</b> (evening into overnight), <b>Saturday</b> (2 PM start), and <b>Sunday</b> (evening into overnight). Compensation: credit, meals on every shoot day, and a copy of the film for your reel.</p>
+    <p class="lead">Reviewed on a rolling basis. Shooting three consecutive days over <b>one Friday&ndash;Sunday weekend in August or September 2026</b> in the Lafayette, Indiana area &mdash; <b>exact dates confirmed when you're cast.</b> <b>Friday</b> (evening into overnight), <b>Saturday</b> (2 PM start), and <b>Sunday</b> (evening into overnight). Compensation: credit, meals on every shoot day, and a copy of the film for your reel.</p>
     <p class="lead" style="margin-top:-8px"><b>Looking to crew instead?</b> <a href="#crew">Scroll down to Join the Crew</a>.</p>
 
     <div class="formwrap">
