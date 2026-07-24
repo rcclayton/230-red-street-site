@@ -368,6 +368,35 @@
   }
   button.submit:hover{background:#e11626}
 
+  /* COLLAPSIBLE CREW FORM — the form is ~900px and most visitors are actors,
+     not crew, so it opens on demand instead of padding out the page. The form
+     stays in the DOM either way; <details> only hides it. */
+  .disclosure{margin-top:28px}
+  .disclosure>summary{
+    list-style:none;
+    cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:10px;
+    padding:16px;
+    background:var(--blood);
+    color:#fff;
+    border-radius:7px;
+    font-weight:700;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    font-size:14px;
+    transition:background .15s ease;
+  }
+  .disclosure>summary::-webkit-details-marker{display:none}
+  .disclosure>summary::marker{content:""}
+  .disclosure>summary:hover{background:#e11626}
+  .disclosure>summary .chev{font-size:12px;transition:transform .2s ease}
+  .disclosure[open]>summary .chev{transform:rotate(180deg)}
+  .disclosure .formwrap{margin-top:14px}
+  summary:focus-visible{outline:2px solid var(--neon);outline-offset:3px}
+  @media(prefers-reduced-motion:reduce){
+    .disclosure>summary .chev{transition:none}
+  }
+
   footer{padding:50px 24px 70px;text-align:center;color:var(--muted);font-size:13px}
   footer .title{font-family:'Cinzel',serif;color:var(--ink);letter-spacing:.12em;font-size:15px;margin-bottom:8px}
 
@@ -593,35 +622,35 @@
   <div class="wrap">
     <p class="eyebrow">The Crew</p>
     <h2>Who We Need Behind the Camera</h2>
-    <p class="lead">Five positions across three days. Volunteer crew &mdash; credit, meals, and clips for your reel. <b>All equipment is provided</b> &mdash; you're welcome to work with your own kit if you'd rather, but nothing is required. Tell us what you've worked on.</p>
+    <p class="lead">Five positions across three days. Volunteer crew &mdash; credit, meals, and clips for your reel. <b>All equipment is provided.</b></p>
 
     <div class="roles">
       <div class="role">
         <h3>SOUND MIXER / BOOM OP <span class="tag">1 opening</span> <span class="tag">Gear provided</span></h3>
         <div class="meta">All three days &middot; Fri&ndash;Sun</div>
-        <p>One person running production sound end to end &mdash; booming and recording. Two of the three days are exterior and after dark, so wind and road noise are the real challenge. The third is an interior day in a basement, with a physically demanding scene and multiple actors.</p>
-        <p class="want"><b>We're looking for:</b> someone comfortable working solo and monitoring their own levels. <b>We supply everything &mdash; recorder, boom, mics, and wireless lavs</b> &mdash; so you can plant mics for the physical scenes instead of chasing them on a boom. Bring your own kit if you prefer, but you don't need to own anything.</p>
+        <p>One person running production sound end to end, booming and recording. Two days are exterior and after dark, so wind and road noise are the real challenge. The third is a basement interior with a physical scene and multiple actors.</p>
+        <p class="want"><b>We're looking for:</b> someone comfortable working solo and monitoring their own levels. <b>We supply recorder, boom, mics, and wireless lavs</b> &mdash; bring your own only if you'd rather.</p>
       </div>
 
       <div class="role">
         <h3>GAFFER / KEY GRIP <span class="tag">1 opening</span> <span class="tag">Gear provided</span></h3>
         <div class="meta">All three days &middot; Fri&ndash;Sun</div>
-        <p>Every scene in the film is night, so lighting is doing most of the work. You'd design and run lighting across three setups &mdash; a hilltop exterior, an unfinished basement, and a house exterior &mdash; plus stands, flags, negative fill, and one slider move. You'd also own power: we're running off a generator at the exterior location.</p>
-        <p class="want"><b>We're looking for:</b> someone who can light a night exterior with limited units and knows their way around a generator, distro, and safe cable runs. <b>Lights, stands, grip, and power are all supplied</b> &mdash; bring your own if you like, but it isn't required.</p>
+        <p>Every scene is night, so lighting does most of the work. Three setups &mdash; a hilltop exterior, an unfinished basement, and a house exterior &mdash; plus stands, flags, and one slider move. You'd own power too: the exterior runs off a generator.</p>
+        <p class="want"><b>We're looking for:</b> someone who can light a night exterior with limited units and knows their way around a generator, distro, and safe cable runs. <b>Lights, grip, and power are supplied.</b></p>
       </div>
 
       <div class="role">
         <h3>PRODUCTION ASSISTANT <span class="tag">2 openings</span> <span class="tag">No experience required</span></h3>
         <div class="meta">All three days preferred &middot; Fri&ndash;Sun</div>
-        <p>The most useful people on a small night shoot. Lockups and keeping the set quiet, hauling gear up and down basement stairs, watching for traffic and neighbors at the exterior locations, food runs, and resets between takes.</p>
-        <p class="want"><b>We're looking for:</b> reliable, awake, and happy to be outside overnight. No experience needed &mdash; this is a good first film credit.</p>
+        <p>The most useful people on a small night shoot. Lockups, hauling gear up and down basement stairs, watching for traffic and neighbors, food runs, and resets between takes.</p>
+        <p class="want"><b>We're looking for:</b> reliable, awake, and happy to be outside overnight. No experience needed &mdash; a good first film credit.</p>
       </div>
 
       <div class="role">
         <h3>SFX MAKEUP / BLOOD <span class="tag">1 opening</span> <span class="tag">Materials provided</span></h3>
         <div class="meta">Shoot Saturday &middot; plus one prep session beforehand</div>
-        <p>One day, one room, a lot of blood. A staged fight that escalates in stages across roughly eight hours, with two more performers held in continuity makeup the whole time. You'd own the blood plan &mdash; how much, where it goes, and keeping it consistent once it starts, because it only ever goes one direction.</p>
-        <p class="want"><b>We're looking for:</b> someone comfortable with practical blood and, just as much, with tracking continuity across a long day. Prosthetics aren't required. We'd also want you for a <b>blood test in the week before the shoot</b> &mdash; testing the recipe on camera, on skin, wardrobe and walls, and confirming cleanup works on the real surfaces. <b>We supply the materials and cover the budget.</b></p>
+        <p>One day, one room, main focus for you is the blood. A staged fight that escalates, with two performers held in continuity the whole time. You'd own the blood and keep it consistent once it starts, because it only ever goes one direction.</p>
+        <p class="want"><b>We're looking for:</b> someone comfortable with practical blood and with tracking continuity across a long day. Prosthetics aren't required. We'd also want you at a <b>blood test in the week before the shoot</b> &mdash; the recipe on camera, on skin, wardrobe and walls. <b>We supply the materials.</b></p>
       </div>
     </div>
 
@@ -630,7 +659,10 @@
       <p style="margin:0"><b>What to expect:</b> three consecutive days, <b>Friday&ndash;Sunday, Aug 21&ndash;23, 2026</b>, in the Lafayette, Indiana area. <b>Friday and Sunday are overnight calls</b> &mdash; evening start, wrapping around 5 AM. <b>Saturday starts at 2 PM</b> and wraps around 1:30 AM. Horror content includes a staged fight and practical stage blood.</p>
     </div>
 
-    <div class="formwrap" style="margin-top:28px">
+    <details class="disclosure" id="crewDisclosure">
+      <summary>Join the Crew <span class="chev" aria-hidden="true">&#9660;</span></summary>
+
+    <div class="formwrap">
       <!-- Success message (shown after a crew submission goes through) -->
       <div id="crewThanks" style="display:none;text-align:center;padding:20px 10px">
         <div style="font-family:'Cinzel',serif;font-size:24px;color:var(--ink);margin-bottom:8px">Thanks &mdash; we got it</div>
@@ -695,12 +727,13 @@
         <label>Anything else?</label>
         <textarea name="notes" rows="3" placeholder="Scheduling conflicts, questions, special skills&hellip;"></textarea>
 
-        <button class="submit" type="submit">Join the Crew</button>
+        <button class="submit" type="submit">Send My Info</button>
         <p class="hint" style="text-align:center;margin-top:14px">
           Prefer email? Tell us which position you're interested in at <a href="mailto:ryan@ryanclayton.media?subject=230%20Red%20Street%20Crew">ryan@ryanclayton.media</a>.
         </p>
       </form>
     </div>
+    </details>
   </div>
 </section>
 
@@ -913,7 +946,7 @@ var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iC
       })
       .catch(function (err) {
         console.error("Crew submission failed:", err);
-        if (btn) { btn.disabled = false; btn.textContent = "Join the Crew"; }
+        if (btn) { btn.disabled = false; btn.textContent = "Send My Info"; }
         alert(
           "Sorry — something went wrong sending your info.\n\n" +
           "Please email ryan@ryanclayton.media instead and tell us which " +
