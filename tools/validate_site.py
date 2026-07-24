@@ -110,6 +110,33 @@ check("application/x-www-form-urlencoded" in html,
 for href in re.findall(r'href="([^"]+\.pdf)"', html):
     check((ROOT / unquote(href)).exists(), f"sides link points at a missing file: {href}")
 
+# Every local asset the page references must actually be in the repo. Broken
+# images fail silently in a way nobody notices until someone loads the page.
+# The optional trailing group swallows cache-busting queries (title.jpg?v=4).
+for asset in re.findall(r'(?:src|href)="([^"#?:]+\.(?:jpg|jpeg|png|ico|pdf))(?:\?[^"]*)?"', html):
+    check((ROOT / unquote(asset)).exists(), f"index.html references a missing file: {asset}")
+
+# Safari ignores SVG favicons and requests /favicon.ico implicitly. Without
+# the file it shows a generic placeholder — this shipped broken once (Jul 23,
+# fixed Jul 24), and it is invisible in Chrome, so nobody notices.
+check((ROOT / "favicon.ico").exists(), "favicon.ico is missing — Safari will show a placeholder icon")
+check('href="favicon.ico"' in html, "favicon.ico exists but index.html does not link it")
+
+# Both forms live inside <details>, and a script opens the right one when a
+# link targets its section. If a disclosure is not in that map, its CTA
+# scrolls the visitor to a collapsed bar and the form looks missing.
+m = re.search(r"var SECTION_FORMS = \{(.*?)\};", html, re.S)
+check(m is not None, "the SECTION_FORMS map was removed from index.html")
+if m:
+    mapped = set(re.findall(r'"([^"]+)"', m.group(1)))
+    found = set(re.findall(r'<details[^>]*\bid="([^"]+)"', html))
+    check(
+        mapped == found,
+        "SECTION_FORMS and the <details> blocks disagree.\n"
+        f"    only in the map:      {sorted(mapped - found)}\n"
+        f"    only in the markup:   {sorted(found - mapped)}",
+    )
+
 check(CNAME.read_text().strip() == "230redstreet.com",
       "CNAME must contain exactly 230redstreet.com")
 check("ryan@ryanclayton.media" in html, "contact email is missing from index.html")
