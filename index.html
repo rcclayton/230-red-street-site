@@ -526,6 +526,9 @@
     <p class="lead">Reviewed on a rolling basis. Shooting three consecutive days, <b>Friday&ndash;Sunday, Aug 21&ndash;23, 2026</b>, in the Lafayette, Indiana area. <b>Friday</b> (evening into overnight), <b>Saturday</b> (2 PM start), and <b>Sunday</b> (evening into overnight). Compensation: credit, meals on every shoot day, and clips for your reel.</p>
     <p class="lead" style="margin-top:-8px"><b>Looking to crew instead?</b> <a href="#crew">Scroll down to Join the Crew</a>.</p>
 
+    <details class="disclosure" id="auditionDisclosure">
+      <summary>Submit Your Audition <span class="chev" aria-hidden="true">&#9660;</span></summary>
+
     <div class="formwrap">
       <!-- Success message (shown after a submission goes through) -->
       <div id="thanks" style="display:none;text-align:center;padding:20px 10px">
@@ -615,6 +618,7 @@
         </p>
       </form>
     </div>
+    </details>
   </div>
 </section>
 
@@ -784,6 +788,30 @@
    audition spreadsheet and emails Ryan. This is the /exec URL from
    Deploy > New deployment in the Apps Script editor. */
 var ENDPOINT = "https://script.google.com/macros/s/AKfycbzqqSD5KNp8BtdI6UULQR8iCcW2RnUdx3aMHG2FmLOaR9aYUke9p-vqb4iRWDZaULJS/exec";
+
+/* Both forms live inside <details> so they don't pad out the page. But a
+   visitor who clicked "Submit Your Audition" in the hero has already told us
+   what they want — making them click a second bar to reach the form would be
+   friction on the one path that matters. So any in-page link to #submit or
+   #crew opens that section's form on the way there, and so does landing on
+   the page with the hash already in the URL (a shared or bookmarked link). */
+(function () {
+  var SECTION_FORMS = { submit: "auditionDisclosure", crew: "crewDisclosure" };
+
+  function openFor(hash) {
+    var id = SECTION_FORMS[String(hash || "").replace(/^#/, "")];
+    if (!id) return;
+    var d = document.getElementById(id);
+    if (d) { d.open = true; }
+  }
+
+  openFor(window.location.hash);
+  window.addEventListener("hashchange", function () { openFor(window.location.hash); });
+  document.addEventListener("click", function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+    if (a) { openFor(a.getAttribute("href")); }
+  });
+})();
 
 (function () {
   var form = document.getElementById("auditionForm");
