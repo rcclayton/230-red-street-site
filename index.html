@@ -243,7 +243,13 @@
     margin:0 0 8px;
     font-weight:700;
   }
-  .lead{color:var(--muted);max-width:640px;margin:0 0 34px;font-size:17px}
+  /* Scoped to p on purpose. As a bare .lead this also matched the role card's
+     <span class="tag lead">, handing that chip a 34px bottom margin that
+     shoved it 17px above the chip beside it.
+     No max-width: these intros fill the content column. They were capped at
+     640px for line length, but inside a 912px column that reads as text
+     wrapping early for no reason. */
+  p.lead{color:var(--muted);margin:0 0 34px;font-size:17px}
 
   /* ROLE CARDS */
   .roles{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
