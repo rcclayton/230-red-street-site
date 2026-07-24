@@ -277,6 +277,57 @@
     margin-top:12px;
   }
 
+  /* TEAM — who's actually making this, at the bottom of the page */
+  .team{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  .person{
+    background:linear-gradient(180deg,var(--panel),var(--panel-2));
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:24px;
+  }
+  .person .head{display:flex;align-items:center;gap:18px;margin-bottom:16px}
+  .person img{
+    width:104px;height:104px;flex:none;
+    border-radius:50%;
+    object-fit:cover;
+    border:1px solid var(--line);
+    box-shadow:0 8px 24px rgba(0,0,0,.45);
+    filter:grayscale(100%) contrast(1.05);
+    transition:filter .25s ease;
+  }
+  .person:hover img{filter:grayscale(0%)}
+  .person h3{
+    font-family:'Cinzel',serif;
+    font-size:22px;
+    margin:0 0 6px;
+    line-height:1.15;
+  }
+  .person .role-title{
+    color:var(--blood);
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    margin:0;
+  }
+  .person p.bio{margin:0;color:#d4d4db;font-size:15px}
+  .person .credit-link{margin:16px 0 0}
+  .person .credit-link a{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-size:11.5px;
+    font-weight:600;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink);
+    border-bottom:1px solid rgba(193,18,31,.55);
+    padding-bottom:4px;
+    transition:color .15s ease, border-color .15s ease;
+  }
+  .person .credit-link a:hover{color:var(--blood);border-color:var(--blood);text-decoration:none}
+  .person .credit-link .arrow{font-size:13px;color:var(--blood)}
+
   /* STEPS + GUIDELINES */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:40px}
   ol.steps{list-style:none;counter-reset:s;margin:0;padding:0}
@@ -328,6 +379,12 @@
     .cta-row .cta{width:100%;max-width:320px}
     .roles{grid-template-columns:1fr}
     .role.lead-role{grid-column:auto}
+    .team{grid-template-columns:1fr}
+    .person img{width:88px;height:88px}
+    /* Keeps two-word names on one line next to the photo */
+    .person h3{font-size:19px}
+    /* Photos never grayscale on touch devices — there's no hover to undo it */
+    .person img{filter:none}
     .grid2{grid-template-columns:1fr;gap:32px}
     .field.row{grid-template-columns:1fr}
     section{padding:48px 0}
@@ -643,6 +700,41 @@
           Prefer email? Tell us which position you're interested in at <a href="mailto:ryan@ryanclayton.media?subject=230%20Red%20Street%20Crew">ryan@ryanclayton.media</a>.
         </p>
       </form>
+    </div>
+  </div>
+</section>
+
+<section id="team">
+  <div class="wrap">
+    <p class="eyebrow">Behind the Film</p>
+    <h2>Who You'd Be Working With</h2>
+    <p class="lead">A small, local team. If you're cast or crewed on this, these are the two people you'll be dealing with directly.</p>
+
+    <div class="team">
+      <div class="person">
+        <div class="head">
+          <!-- Images are cache-busted with ?v=N — bump N on every replacement,
+               same rule as title.jpg. See HANDOFF.md. -->
+          <img src="ryan.jpg?v=1" alt="Ryan Clayton" width="800" height="800" loading="lazy">
+          <div>
+            <h3>Ryan Clayton</h3>
+            <p class="role-title">Writer &amp; Director</p>
+          </div>
+        </div>
+        <p class="bio">Ryan wrote and is directing 230 Red Street, working out of Lafayette, Indiana under Ryan Clayton Productions. He has spent ten years making documentaries. On YouTube, that has meant working with the biggest brands and some of the best athletes in the world in the ultra running space, including a documentary that was an Official Selection at the Indy Film Fest and now streams there. In long form, he was director and cinematographer on a six-part documentary television series streaming on Amazon Prime. With 230 Red Street he's carrying that decade of documentary work into narrative filmmaking.</p>
+        <p class="credit-link"><a href="https://www.imdb.com/name/nm11620077/" target="_blank" rel="noopener">Full Credits on IMDb <span class="arrow" aria-hidden="true">&#8599;</span></a></p>
+      </div>
+
+      <div class="person">
+        <div class="head">
+          <img src="cassidy.jpg?v=1" alt="Cassidy Kitchel" width="800" height="800" loading="lazy">
+          <div>
+            <h3>Cassidy Kitchel</h3>
+            <p class="role-title">Producer</p>
+          </div>
+        </div>
+        <p class="bio">Deeply rooted in the Greater Lafayette community, Cassidy has spent her career connecting people, supporting local businesses, and elevating the regional arts scene. Her background includes directing marketing and major events for The Arts Federation, where she helped champion regional artists and performers, as well as leading community-focused initiatives across Greater Lafayette Commerce. Recognized locally for her entrepreneurial spirit, Cassidy steps into the role of Producer for 230 Red Street to bridge production with the community, overseeing casting, outreach, and ensemble logistics.</p>
+      </div>
     </div>
   </div>
 </section>
